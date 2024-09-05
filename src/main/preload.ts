@@ -21,6 +21,8 @@ const electronHandler = {
     once(channel: Channels, func: (...args: unknown[]) => void) {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
+    csv: async (name: string, filePath: string) =>
+      ipcRenderer.invoke('csvScript', { name, filePath }),
   },
 };
 

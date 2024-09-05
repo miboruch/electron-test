@@ -1,12 +1,16 @@
 {
-  "name": "electron-react-boilerplate",
-  "version": "4.6.0",
-  "description": "A foundation for scalable desktop apps",
+  "name": "mergex-desktop",
+  "version": "0.0.3",
+  "description": "Mergex Desktop application",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
+    "name": "EPC Network",
     "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "url": "https://epcnetwork.io"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miboruch/electron-test.git"
   },
   "main": "./dist/main/main.js",
   "scripts": {

@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import { getCsvFiles } from './lib/csv';
 
 class AppUpdater {
   constructor() {
@@ -111,6 +112,13 @@ const createWindow = async () => {
   // eslint-disable-next-line
   new AppUpdater();
 };
+
+ipcMain.handle(
+  'csvScript',
+  (event, { name, filePath }: { name: string; filePath: string }) => {
+    getCsvFiles(name, filePath);
+  },
+);
 
 /**
  * Add event listeners...
