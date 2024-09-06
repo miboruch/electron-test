@@ -23,6 +23,11 @@ const electronHandler = {
     },
     csv: async (name: string, filePath: string) =>
       ipcRenderer.invoke('csvScript', { name, filePath }),
+    updateMessage: (
+      callback: (event: IpcRendererEvent, message: string) => void,
+    ) => {
+      ipcRenderer.on('updateMessage', callback);
+    },
   },
 };
 

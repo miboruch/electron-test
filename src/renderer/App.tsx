@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
 import './App.css';
 
 function Hello() {
   const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    window.electron.ipcRenderer.updateMessage((event, message: string) => {
+      console.log(message);
+    });
+  }, []);
 
   const executeCsvCommand = async () => {
     if (file) await window.electron.ipcRenderer.csv(file.name, file.path);

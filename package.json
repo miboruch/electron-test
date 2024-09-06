@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/miboruch/electron-test.git"
   },
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "author": {
     "name": "EPC Network",
@@ -234,8 +234,8 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "miboruch",
+      "repo": "electron-test"
     }
   },
   "collective": {

@@ -16,6 +16,8 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 import { getCsvFiles } from './lib/csv';
 
+let mainWindow: BrowserWindow | null = null;
+
 class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -23,8 +25,6 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
   }
 }
-
-let mainWindow: BrowserWindow | null = null;
 
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
@@ -106,6 +106,39 @@ const createWindow = async () => {
   mainWindow.webContents.setWindowOpenHandler((edata) => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
+  });
+
+  /* verify if that works */
+  mainWindow?.webContents.send(
+    'updateMessage',
+    `Checking for updates. Current version ${app.getVersion()}`,
+  );
+
+  autoUpdater.on('update-available', (info) => {
+    mainWindow?.webContents.send(
+      'updateMessage',
+      `Update available. Current version ${app.getVersion()}`,
+    );
+    autoUpdater.downloadUpdate();
+  });
+
+  autoUpdater.on('update-not-available', (info) => {
+    mainWindow?.webContents.send(
+      'updateMessage',
+      `No update available. Current version ${app.getVersion()}`,
+    );
+  });
+
+  /* Download Completion Message */
+  autoUpdater.on('update-downloaded', (info) => {
+    mainWindow?.webContents.send(
+      'updateMessage',
+      `Update downloaded. Current version ${app.getVersion()}`,
+    );
+  });
+
+  autoUpdater.on('error', (info) => {
+    mainWindow?.webContents.send('updateMessage', info);
   });
 
   // Remove this if your app does not use auto updates
